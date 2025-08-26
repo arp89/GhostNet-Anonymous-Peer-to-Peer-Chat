@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565468569482",
+    "project_id": "ghostnet-65aa4",
+    "storage_bucket": "ghostnet-65aa4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565468569482:android:fb905cec4cfbeaa4be3273",
+        "android_client_info": {
+          "package_name": "com.example.ghostnet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu9sAg4eG4mcQpB6QfsWEHnLQ_f7oJjzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
