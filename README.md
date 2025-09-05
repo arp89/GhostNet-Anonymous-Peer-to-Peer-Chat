@@ -28,7 +28,7 @@ To test the multi-hop mesh functionality, you need at least two Android devices 
 
 1.  **Clone the Repository:**
     ```
-    git clone [https://github.com/arp89/Ghostnet.git](https://github.com/arp89/Ghostnet.git)
+    git clone https://github.com/arp89/Ghostnet.git
     ```
 2.  **Open in Android Studio:** Open the cloned project in Android Studio (Narwhal 2025.1.1.14 or newer).
 3.  **Run the App:**
