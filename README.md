@@ -1,50 +1,68 @@
 # GhostNet: Anonymous Peer-to-Peer Chat
 
-**GhostNet** is a secure, anonymous, and decentralized chat application for Android that allows you to communicate with nearby users without needing an internet connection. It creates a resilient mesh network using Bluetooth and Wi-Fi Direct, enabling messages to hop between devices to extend their range far beyond standard Bluetooth capabilities.
+GhostNet is a secure, anonymous, and decentralized chat application for Android that allows users to communicate without internet or network coverage.
+It creates a resilient mesh network using Bluetooth and Wi-Fi Direct, enabling messages and files to hop between devices, extending the range far beyond standard Bluetooth limits.
 
 
 ## Key Features
 
-* **Completely Offline:** Works without any internet or cellular connection. Perfect for remote areas, crowded events, or situations where connectivity is unavailable.
-* **True Anonymity:** No accounts, no phone numbers, no personal information required. Users can set a temporary name for each session.
-* **Decentralized Mesh Network:** Devices connect directly to each other. There are no central servers, making the network resilient and censorship-resistant.
-* **Secure:** The connection between devices is encrypted by the Nearby Connections API, and no message history is stored on the device after the session ends.
+**Completely Offline:** Works without any internet or cellular connection — ideal for remote areas, crowded events, or emergency communication.
+**True Anonymity:** No accounts, phone numbers, or personal data required. Each session uses a temporary username.
+**Web-of-Trust Model:** Connection requests must be approved by a host before joining, preventing unauthorized access.
+**Decentralized Mesh Network:** No servers, no cloud — devices connect directly to each other, forming a self-healing, censorship-resistant network.
+**End-to-End Encryption:**Messages encrypted with AES-256 (symmetric).
+Messages signed and verified with RSA-2048 (asymmetric).
+Each message is uniquely signed and verified for authenticity.
+**File & Attachment Sharing: **Send images or documents securely between peers.
+**Modern UI:** Built entirely with Jetpack Compose, featuring dark-cyan cyber aesthetics.
 
 ## Working On
-* **Multi-Hop Messaging:** Messages automatically hop from device to device, dramatically extending the communication range beyond a single Bluetooth connection.
-* **Real-Time Communication:** Features a dynamic group chat with a typing indicator to show when other users are active.
+
+**Multi-Hop File Transfer:** Extend mesh relaying beyond messages to include files and attachments
+**Delivery Receipts & Progress Indicators:** Real-time file transfer feedback for both sender and receiver.
+**Whisper Mode:** Temporary “auto-delete” messages for enhanced privacy.
 
 ## How It Works
 
-GhostNet is built on top of Google's **Nearby Connections API**, which abstracts the complexity of Bluetooth and Wi-Fi Direct into a simple, high-level API.
-
-The app uses the `P2P_CLUSTER` strategy, which creates a many-to-many network topology. When the app is launched, it automatically begins both **advertising** (making itself visible) and **discovering** (looking for other devices).
-
-When a device discovers a new peer, it automatically requests a connection. Once connected, they form a small part of the mesh. When a user sends a message, it is broadcast to all directly connected peers. Each peer that receives the message checks if it has seen the message before (using a unique message ID to prevent infinite loops) and, if not, forwards it to all of its own peers. This forwarding mechanism is what enables the multi-hop capability.
+GhostNet uses Google’s Nearby Connections API with the P2P_CLUSTER strategy, which enables many-to-many peer connections over Bluetooth, BLE, and Wi-Fi Direct.
+**Discovery & Advertising:** When launched, each device advertises its presence and scans for others using a shared channel password hash.
+**Web-of-Trust Connection:** A joining user must enter the same password. The host receives an approval prompt and can approve or reject the connection.
+Mesh Formation:
+Once connected, peers form part of the mesh network.
+When a message or file is sent, it’s:
+Encrypted (AES-256)
+Digitally signed (RSA-2048)
+Broadcast to all directly connected peers
+Each peer checks if the message is new, then forwards it — enabling multi-hop propagation.
 
 ## Getting Started & How to Test
-
-To test the multi-hop mesh functionality, you need at least two Android devices (physical devices or emulators).
-
-1.  **Clone the Repository:**
-    ```
-    git clone https://github.com/arp89/Ghostnet.git
-    ```
-2.  **Open in Android Studio:** Open the cloned project in Android Studio (Narwhal 2025.1.1.14 or newer).
-3.  **Run the App:**
-    * Launch two or more emulators via **Tools > Device Manager**.
-    * Run the app on each emulator.
-4.  **Onboarding:**
-    * On each device, proceed through the introductory pages.
-    * On the final page, enter a unique temporary name for each user and tap "Enter GhostNet".
-    * Accept the necessary Bluetooth and location permissions.
-5.  **Connect & Chat:**
-    * The devices will automatically start discovering and connecting to each other.
-    * Once connected, the app will transition to the group chat screen.
-    * Send a message from one device, and it will appear on all other devices in the mesh.
+Open the cloned folder in Android Studio (Giraffe / Hedgehog / Iguana / Narwhal 2025.1.1+).
+**Run the App**
+Use two or more physical devices or emulators.
+Go to Build → Build APK(s) if you want a .apk file.
+Each device must have Bluetooth and Location turned ON.
+**Onboarding**
+Launch the app and follow the introduction screens.
+Enter a temporary username and a shared password.
+**Choose:**
+Host: Creates a secure channel.
+Join: Searches for the host and requests approval.
+The host approves the request → chat begins!
 
 ## Technology Stack
 
-* **Language:** [Kotlin](https://kotlinlang.org/)
-* **UI Toolkit:** [Jetpack Compose](https://developer.android.com/jetpack/compose)
-* **Connectivity:** [Google Nearby Connections API](https://developers.google.com/nearby/connections/overview)
+| Layer            | Technology                                  |
+| ---------------- | ------------------------------------------- |
+| **Language**     | Kotlin                                      |
+| **UI**           | Jetpack Compose                             |
+| **Connectivity** | Google Nearby Connections API               |
+| **Encryption**   | AES-256 (CBC) + RSA-2048 (SHA-256 with RSA) |
+| **Architecture** | MVVM-style single-activity Compose app      |
+| **Build Tools**  | Gradle + Android Studio                     |
+
+## Security Design
+**AES-256-CBC:** Used for message encryption (32-byte key from SHA-256 hash of channel password).
+**RSA-2048:** Used for message signing and verification.
+**SHA-256 Hashing:** Used for secure channel matching (shared password hash).
+**No Data Retention:** Messages and files are stored only temporarily in memory/cache.
+**Device-Level Isolation:** Each device generates its own RSA key pair on every session.
