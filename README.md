@@ -20,7 +20,6 @@ Each message is uniquely signed and verified for authenticity.
 
 **Multi-Hop File Transfer:** Extend mesh relaying beyond messages to include files and attachments
 **Delivery Receipts & Progress Indicators:** Real-time file transfer feedback for both sender and receiver.
-**Whisper Mode:** Temporary “auto-delete” messages for enhanced privacy.
 
 ## How It Works
 
